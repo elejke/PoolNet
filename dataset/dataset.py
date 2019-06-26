@@ -1,6 +1,7 @@
 import os
 from PIL import Image
 import cv2
+import glob
 import torch
 from torch.utils import data
 from torchvision import transforms
@@ -39,10 +40,10 @@ class ImageDataTrain(data.Dataset):
 class ImageDataTest(data.Dataset):
     def __init__(self, data_root, data_list):
         self.data_root = data_root
-        self.data_list = data_list
-        with open(self.data_list, 'r') as f:
-            self.image_list = [x.strip() for x in f.readlines()]
-
+#         self.data_list = data_list
+#         with open(self.data_list, 'r') as f:
+#         self.image_list = [x.strip() for x in f.readlines()]
+        self.image_list = glob(os.path.join(data_root, "*.JPG")) + glob(os.path.join(data_root, "*.jpg"))
         self.image_num = len(self.image_list)
 
     def __getitem__(self, item):
