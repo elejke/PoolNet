@@ -1,7 +1,7 @@
 import os
 from PIL import Image
 import cv2
-import glob
+from glob import glob
 import torch
 from torch.utils import data
 from torchvision import transforms
@@ -47,7 +47,7 @@ class ImageDataTest(data.Dataset):
         self.image_num = len(self.image_list)
 
     def __getitem__(self, item):
-        image, im_size = load_image_test(os.path.join(self.data_root, self.image_list[item]))
+        image, im_size = load_image_test(self.image_list[item])
         image = torch.Tensor(image)
 
         return {'image': image, 'name': self.image_list[item % self.image_num], 'size': im_size}

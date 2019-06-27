@@ -3,8 +3,11 @@ import os
 from dataset.dataset import get_loader
 from solver import Solver
 
-def get_test_info(sal_mode='e'):
-    if sal_mode == 'e':
+def get_test_info(sal_mode, image_root):
+    if sal_mode == 'c':
+        image_root = image_root
+        image_source = ""
+    elif sal_mode == 'e':
         image_root = './data/ECSSD/Imgs/'
         image_source = './data/ECSSD/test.lst'
     elif sal_mode == 'p':
@@ -40,7 +43,7 @@ def main(config):
         train = Solver(train_loader, None, config)
         train.train()
     elif config.mode == 'test':
-        config.test_root, config.test_list = get_test_info(config.sal_mode)
+        config.test_root, config.test_list = get_test_info(config.sal_mode, config.test_root)
         test_loader = get_loader(config, mode='test')
         if not os.path.exists(config.test_fold): os.mkdir(config.test_fold)
         test = Solver(None, test_loader, config)
@@ -90,7 +93,7 @@ if __name__ == '__main__':
         os.mkdir(config.save_folder)
 
     # Get test set info
-    test_root, test_list = get_test_info(config.sal_mode)
+    test_root, test_list = get_test_info(config.sal_mode, config.test_fold)
     config.test_root = test_root
     config.test_list = test_list
 

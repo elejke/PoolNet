@@ -72,7 +72,8 @@ class Solver(object):
                 preds = self.net(images)
                 pred = np.squeeze(torch.sigmoid(preds).cpu().data.numpy())
                 multi_fuse = 255 * pred
-                cv2.imwrite(os.path.join(self.config.test_fold, name[:-4] + '_' + mode_name + '.png'), multi_fuse)
+                path = name[:-4] + '_' + mode_name + '.png'
+                cv2.imwrite(path, multi_fuse)
         time_e = time.time()
         print('Speed: %f FPS' % (img_num/(time_e-time_s)))
         print('Test Done!')
